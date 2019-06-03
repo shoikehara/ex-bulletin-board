@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>掲示板</title>
+</head>
+<body>
+<form action="bulletin.html" th:action="@{/bulletin-board/insert}" method="post" th:object="${articleForm}">
+投稿者名：<br>
+<input type="text" th:field="*{name}"><br>
+投稿内容：<br>
+<textarea rows="3" cols="20" th:field="*{content}"></textarea><br>
+<button>記事投稿</button>
+</form>
+
+<div th:each="article:${articleList}">
+<hr>
+接続ID：<span th:text="${article.id}">9999</span><br>
+投稿者：<span th:text="${article.name}">名無し</span><br>
+投稿内容：<span th:text="${article.content}">なし</span><br><br>
+
+<span th:each="comment:${commentList}">
+コメントID：<span th:text="${comment.id}">9999</span><br>
+コメント者氏名：<span th:text="${comment.name}">名無し</span><br>
+コメント内容：<span th:text="${comment.content}">なし</span><br><br>
+</span>
+
+<form action="bulletin-board.html" th:action="@{/bulletin-board/insert}" method="post" th:object="${commentForm}">
+名前：<br>
+<input type="text" th:field="*{name}"><br>
+コメント：<br>
+<textarea rows="3" cols="20" th:field="*{content}"></textarea><br>
+<input type="hidden" th:value="${article.id}" th:field="*{articleId}">
+<button>コメント投稿</button>
+</form>
+</div>
+</body>
+</html>
