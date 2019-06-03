@@ -1,9 +1,13 @@
 package com.example.domain;
 
 public class Comment {
+	/**コメントID*/
 	private Integer id;
+	/**コメント投稿者名*/
 	private String name;
+	/**コメント投稿内容*/
 	private String content;
+	/**記事ID*/
 	private Integer articleId;
 	
 	@Override

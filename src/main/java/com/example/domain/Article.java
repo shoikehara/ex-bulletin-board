@@ -3,9 +3,13 @@ package com.example.domain;
 import java.util.List;
 
 public class Article {
+	/**記事ID*/
 	private Integer id;
+	/**投稿者名*/
 	private String name;
+	/**記事内容*/
 	private String content;
+	/**コメント一覧*/
 	private List<Comment> commentList;
 	
 	@Override

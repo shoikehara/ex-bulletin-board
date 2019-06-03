@@ -1,8 +1,11 @@
 package com.example.form;
 
 public class CommentForm {
+	/**コメント者名*/
 	private String name;
+	/**コメント内容*/
 	private String content;
+	/**記事ID*/
 	private String articleId;
 	
 	public String getName() {
