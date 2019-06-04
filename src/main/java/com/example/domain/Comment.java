@@ -1,5 +1,11 @@
 package com.example.domain;
 
+/**
+ * Commentクラス.
+ * 
+ * @author sho.ikehara
+ *
+ */
 public class Comment {
 	/**コメントID*/
 	private Integer id;

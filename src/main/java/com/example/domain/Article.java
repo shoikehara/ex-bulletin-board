@@ -2,6 +2,12 @@ package com.example.domain;
 
 import java.util.List;
 
+/**
+ * Articleクラス.
+ * 
+ * @author sho.ikehara
+ *
+ */
 public class Article {
 	/**記事ID*/
 	private Integer id;

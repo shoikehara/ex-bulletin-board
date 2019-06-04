@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.Article;
 import com.example.repository.ArticleRepository;
+import com.example.repository.CommentRepository;
 
 /**
  * 記事を操作するサービスクラス.
@@ -20,6 +21,8 @@ import com.example.repository.ArticleRepository;
 public class ArticleService {
 	@Autowired
 	private ArticleRepository articleRepository;
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	/**
 	 * 全件検索を行う.
@@ -46,5 +49,6 @@ public class ArticleService {
 	 */
 	public void delete(int id) {
 		articleRepository.delete(id);
+		commentRepository.deleteByArticleId(id);
 	}
 }

@@ -45,7 +45,6 @@ public class CommentService {
 	 * 
 	 * @param articleId 記事ID
 	 */
-	public void deleteByArticleId(int articleId) {
-		commentRepository.deleteByArticleId(articleId);
-	}
+//	public void deleteByArticleId(int articleId) {
+//	}
 }

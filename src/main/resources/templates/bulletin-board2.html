@@ -5,7 +5,7 @@
 <title>掲示板</title>
 </head>
 <body>
-<form action="bulletin.html" th:action="@{/bulletin-board/articleInsert}" method="post" th:object="${articleForm}">
+<form action="bulletin-board.html" th:action="@{/bulletin-board2/articleInsert}" method="post" th:object="${articleForm}">
 投稿者名：
 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">エラー！</span><br>
 <input type="text" name="name" th:field="*{name}"><br>
@@ -21,7 +21,7 @@
 投稿者：<span th:text="${article.name}">名無し</span><br>
 投稿内容：<span th:text="${article.content}">なし</span><br><br>
 
-<form th:action=@{/bulletin-board/delete} method="post">
+<form th:action=@{/bulletin-board2/delete} method="post">
 <input type="hidden" th:value="${article.id}" name="articleId">
 <button>削除</button>
 </form>
@@ -31,21 +31,21 @@
 コメント者氏名：<span th:text="${comment.name}">名無し</span><br>
 コメント内容：<span th:text="${comment.content}">なし</span><br><br>
 </span>
-<form action="bulletin-board.html" th:action="@{/bulletin-board/commentInsert}" method="post" th:object="${commentForm}">
+<form action="bulletin-board.html" th:action="@{/bulletin-board2/commentInsert}" method="post" th:object="${commentForm}">
 <br>名前：
 <span th:if="${article.id}==${commentForm.articleId}">
 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">エラー！</span>
 <br><input type="text" name="name" th:field="*{name}">
 </span>
-<span th:if="${article.id}!=${articleId}">
+<span th:if="${article.id}!=${commentForm.articleId}">
 <br><input type="text" name="name">
 </span>
 <br>コメント：
-<span th:if="${article.id}==${articleId}">
+<span th:if="${article.id}==${commentForm.articleId}">
 <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color:red">エラー！</span>
 <br><textarea rows="3" cols="20" name="content" th:field="*{content}"></textarea>
 </span>
-<span th:if="${article.id}!=${articleId}">
+<span th:if="${article.id}!=${commentForm.articleId}">
 <br><textarea rows="3" cols="20" name="content"></textarea>
 </span>
 <input type="hidden" th:value="${article.id}" name="articleId"><br>

@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +14,13 @@ import com.example.domain.Article;
 import com.example.domain.Comment;
 import com.example.form.ArticleForm;
 import com.example.form.CommentForm;
-import com.example.service.ArticleService;
-import com.example.service.CommentService;
+import com.example.service.ArticleCommentService;
 
-/**
- * 記事を操作するコントローラクラス.
- * 
- * @author sho.ikehara
- *
- */
 @Controller
-@RequestMapping("/bulletin-board")
-public class ArticleController {
+@RequestMapping("/bulletin-board2")
+public class ArticleCommentController {
 	@Autowired
-	private ArticleService articleService;
-	@Autowired
-	private CommentService commentService;
+	private ArticleCommentService articleCommentService;	
 	@ModelAttribute
 	public ArticleForm setUpArticleForm() {
 		return new ArticleForm();
@@ -39,33 +29,19 @@ public class ArticleController {
 	public CommentForm setUpCommentForm() {
 		return new CommentForm();
 	}
-	
 	/**
-	 * 記事一覧を表示する.
+	 * 記事一覧とコメントを表示する.
 	 * 
 	 * @param model モデル
 	 * @return　掲示板ページ
 	 */
 	@RequestMapping("/showList")
 	public String showList(Model model) {
-		List<Article> articleList = articleService.findAll();		
-		List<Comment> commentList = new ArrayList<>();
-		for(Article article : articleList) {
-			commentList = commentService.findByArticleId(article.getId());
-			article.setCommentList(commentList);
-		}
+		List<Article> articleList = articleCommentService.findAll();
 		model.addAttribute("articleList",articleList);
-		return "bulletin-board";
+		return "bulletin-board2";
 	}
 	
-	/**
-	 * 記事を投稿する.
-	 * 
-	 * @param articleForm 入力された記事情報
-	 * @param result　エラーの内容格納
-	 * @param model　モデル
-	 * @return　掲示板ページ
-	 */
 	@RequestMapping("/articleInsert")
 	public String articleInsert(@Validated ArticleForm articleForm,BindingResult result ,Model model) {
 		Article article = new Article();
@@ -74,19 +50,10 @@ public class ArticleController {
 		}
 		article.setName(articleForm.getName());
 		article.setContent(articleForm.getContent());
-		articleService.insert(article);
-		
-		return "redirect:/bulletin-board/showList";
+		articleCommentService.insert(article);
+		return "redirect:/bulletin-board2/showList";
 	}
 	
-	/**
-	 * コメントを投稿する.
-	 * 
-	 * @param commentForm 入力されたコメント情報
-	 * @param result　エラーの内容格納
-	 * @param model　モデル
-	 * @return　掲示板ページ
-	 */
 	@RequestMapping("/commentInsert")
 	public String commentInsert(@Validated CommentForm commentForm,BindingResult result,Model model) {
 		Comment comment = new Comment();
@@ -96,20 +63,13 @@ public class ArticleController {
 		comment.setArticleId(Integer.parseInt(commentForm.getArticleId()));
 		comment.setName(commentForm.getName());
 		comment.setContent(commentForm.getContent());
-		commentService.insert(comment);
-
-		return "redirect:/bulletin-board/showList";
+		articleCommentService.insert(comment);
+		return "redirect:/bulletin-board2/showList";
 	}
 	
-	/**
-	 * 記事とコメントを削除する.
-	 * 
-	 * @param articleId 記事ID
-	 * @return　掲示板ページ
-	 */
 	@RequestMapping("/delete")
 	public String delete(Integer articleId) {
-		articleService.delete(articleId);
-		return "redirect:/bulletin-board/showList";
+		articleCommentService.delete(articleId);
+		return "redirect:/bulletin-board2/showList";
 	}
 }
